@@ -1,33 +1,14 @@
-import json
-from app import db, User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Register
+from .serializer import RegisterSerializer
 
-def test_register_success(client):
-    user = User(firstname = "John", 
-                lastname = "Doe", 
-                email = "user1@example.com", 
-                username="admin", 
-                password="secret"
-            )
-    db.session.add(user)
-    db.session.commit()
-
-    response = client.post("/register",
-                           data=json.dumps({
-                                "firstname": "John", 
-                                "lastname": "Doe", 
-                                "email": "user1@example.com", 
-                                "username": "admin", 
-                                "password": "secret"}),
-                           content_type="application/json")
-
-    assert response.status_code == 200
-    assert response.json == {"message": "Registration successful"}
-
-def test_register_failure(client):
-    response = client.post("/register",
-                           data=json.dumps({"email": "user1@example.com", 
-                                            "username": "admin", 
-                                            "password": "wrong"}),
-                           content_type="application/json")
-    assert response.status_code == 401
-    assert response.json == {"message": "Invalid credentials"}
+@api_view(['POST'])
+def register(request):
+    data = request.data
+    serializer = RegisterSerializer(data = data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
