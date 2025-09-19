@@ -12,6 +12,7 @@ import json
 @permission_classes([AllowAny])
 def register(request):
     data = request.data
+    print("Data from frontend:", data)
     serializer = RegisterSerializer(data = data)
     if serializer.is_valid():
         user = serializer.save()

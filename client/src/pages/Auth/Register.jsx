@@ -1,23 +1,127 @@
-import {render, screen, fireEvent} from "@testing/library";
-import Register from './register';
+import React, { useState } from "react";
 
-test("Renders register form and store user credentials in the database", () => {
-  render(<Register />)
+export default function Register() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+  const [message, setMessage] = useState("");
+  
+  const handleChange = async (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const firstNameInput = screen.getByPlaceholderText("firstName");
-  const lastNameInput = screen.getByPlaceholderText("lastName");
-  const emailInput = screen.getByPlaceholderText("email");
-  const usernameInput = screen.getByPlaceholderText("Username");
-  const passwordInput = screen.getByPlaceholderText("Password");
-  const button = screen.getByRole("button", { name: /register/i });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  fireEvent.change(firstNameInput, { target: { value: "firstName" } });
-  fireEvent.change(lastNameInput, { target: { value: "lastName" } });
-  fireEvent.change(emailInput, { target: { value: "user@example.com" } });
-  fireEvent.change(passwordInput, { target: { value: "secret" } });
-  fireEvent.change(usernameInput, { target: { value: "John" } });
+    console.log(formData);
 
-  fireEvent.click(button);
+    const response = await fetch("http://localhost:8000/api/auth/register/", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-  expect(screen.getByText(/registration successful/i)).toBeInTheDocument();
-})
+    const data = await response.json();
+    if (response.ok) {
+      setMessage("Registration successful");
+      console.log("Data sent")
+    } else {
+      setMessage("Registration failed", data.message);
+    }
+  };
+
+  return (
+    <>
+      <div>
+        <form
+          onSubmit={handleSubmit}
+        >
+          <h2>Register</h2>
+
+          <label>
+            First Name
+            <input
+              type="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Last Name
+            <input
+              type="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Email
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Username
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Confirm Password
+            <input
+              type="confirmPassword"
+              name="confirmPassword"
+              required
+            />
+          </label>
+
+          <button
+            type="submit"
+          >
+            Register
+          </button>
+        </form>
+
+        {message && (
+          <p>
+            {message}
+          </p>
+        )}
+      </div>
+    </>
+  );
+}

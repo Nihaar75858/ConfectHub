@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import './App.css'
+import Register from './pages/Auth/Register'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <h1>Sweet Shop Management</h1>
+      <Register />
     </>
   )
 }
