@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Register
 from .serializer import RegisterSerializer
-from django.contrib.auth.hashers import make_password, check_password
+import json
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -20,4 +20,25 @@ def register(request):
             'access': str(refresh.access_token), 
         })
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def test_login_success(user):
+    user = server.post('/login',json.dumps({"username": "John",
+                               "password": "secret"
+                               }),
+                           content_type = "application/json")
+    
+    db.session.log(user)
+    db.session.commit
+    
+    assert user.status_code == 200
+    assert user.json == {"message": "Registration successful"}
+    
+def test_login_failure(user):
+    if(user.password != RegisterSerializer.validated_data['password'] or 
+       user.email != RegisterSerializer.validated_data['email']):
+        assert status_code == 400
+        assert "Please enter proper password or email"
+        
+    
+        
 
