@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Register
-from .serializer import RegisterSerializer
+from .serializer import RegisterSerializer, LoginSerializer
 import json
 
 @api_view(['POST'])
@@ -21,23 +21,12 @@ def register(request):
         })
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def test_login_success(user):
-    user = server.post('/login',json.dumps({"username": "John",
-                               "password": "secret"
-                               }),
-                           content_type = "application/json")
-    
-    db.session.log(user)
-    db.session.commit
-    
-    assert user.status_code == 200
-    assert user.json == {"message": "Registration successful"}
-    
-def test_login_failure(user):
-    if(user.password != RegisterSerializer.validated_data['password'] or 
-       user.email != RegisterSerializer.validated_data['email']):
-        assert status_code == 400
-        assert "Please enter proper password or email"
+@api_view(['POST'])
+def login(request):
+    serializer = LoginSerializer(data = request.data)
+    if serializer.is_valid():
+        return Response(serializer.data, status = status.HTTP_202_ACCEPTED)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
         
     
         
