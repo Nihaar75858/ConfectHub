@@ -22,10 +22,16 @@ def register(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login(request):
     serializer = LoginSerializer(data = request.data)
     if serializer.is_valid():
-        return Response(serializer.data, status = status.HTTP_202_ACCEPTED)
+        user = serializer.validated_data['user']
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
         
     

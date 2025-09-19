@@ -12,9 +12,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         return Register.objects.create_user(**validated_data)
     
 class LoginSerializer(serializers.Serializer):
-    class Meta:
-        email = serializers.EmailField()
-        password = serializers.CharField()
+    email = serializers.EmailField()
+    password = serializers.CharField()
     
-    def __str__(self):
-        return self.email
+    def validate(self, data):
+        user = authenticate(username=data['email'], password=data['password'])
+        if not user:
+            raise serializers.ValidationError('Invalid credentials')
+        data['user'] = user
+        return data
