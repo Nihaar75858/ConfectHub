@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Register
 from .serializer import RegisterSerializer, LoginSerializer, SweetSerializer
+from .permissions import IsAdmin, IsAdminOrReadOnly
 import json
 
 @api_view(['POST'])
@@ -34,47 +35,16 @@ def login(request):
         })
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-# def test_add_sweet_success(client):
-#     sweet = Sweet(
-#         "name": "Milk Chocolate Bar",
-#         "category": "Chocolate",
-#         "price": "₹150",
-#         "quantity": "100",
-#         "description": "Smooth and creamy milk chocolate, perfect for gifting or snacking."
-#     )
-    
-#     db.session.add(sweet)
-#     db.session.commit()
-    
-#     response = client.post("/sweets/", ({
-#         "name": "Milk Chocolate Bar",
-#         "category": "Chocolate",
-#         "price": "₹150",
-#         "quantity": "100",
-#         "description": "Smooth and creamy milk chocolate, perfect for gifting or snacking."
-#     }), content_type = 'application/json')
-    
-#     assert response.status_code == 200
-#     assert response.json == {"message": "Sweet added"}
-        
-# def test_add_sweet_failure(client):
-#     response = client.post("/sweets/", ({
-#         "name": "Milk Chocolate Bar",
-#         "category": "Chocolate",
-#         "price": "₹150",
-#         "quantity": "100",
-#         "description": "Smooth and creamy milk chocolate, perfect for gifting or snacking."
-#     }), content_type = 'application/json')
-    
-#     assert response.status_code == 400
-#     assert response.json == {"message": "Sweet not added"}
-
 @api_view(['POST'])
+@permission_classes([IsAdmin])
 def sweets(request):
     serializer = SweetSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status = status.HTTP_202_ACCEPTED)
+        return Response({
+            'message': 'Sweet added successfully',
+            'sweet': serializer.data
+        }, status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
         
 
