@@ -33,7 +33,41 @@ def login(request):
             'access': str(refresh.access_token),
         })
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+def test_add_sweet_success(client):
+    sweet = Sweet(
+        "name": "Milk Chocolate Bar",
+        "category": "Chocolate",
+        "price": "₹150",
+        "quantity": "100",
+        "description": "Smooth and creamy milk chocolate, perfect for gifting or snacking."
+    )
+    
+    db.session.add(sweet)
+    db.session.commit()
+    
+    response = client.post("/sweets/", ({
+        "name": "Milk Chocolate Bar",
+        "category": "Chocolate",
+        "price": "₹150",
+        "quantity": "100",
+        "description": "Smooth and creamy milk chocolate, perfect for gifting or snacking."
+    }), content_type = 'application/json')
+    
+    assert response.status_code == 200
+    assert response.json == {"message": "Sweet added"}
         
+def test_add_sweet_failure(client):
+    response = client.post("/sweets/", ({
+        "name": "Milk Chocolate Bar",
+        "category": "Chocolate",
+        "price": "₹150",
+        "quantity": "100",
+        "description": "Smooth and creamy milk chocolate, perfect for gifting or snacking."
+    }), content_type = 'application/json')
+    
+    assert response.status_code == 400
+    assert response.json == {"message": "Sweet not added"}
     
         
 
