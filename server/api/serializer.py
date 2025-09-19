@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import Register
+from .models import Register, Sweets
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +21,9 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError('Invalid credentials')
         data['user'] = user
         return data
+    
+class SweetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sweets
+        fields = '__all__'
+        

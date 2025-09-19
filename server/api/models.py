@@ -17,3 +17,13 @@ class Register(AbstractUser):
     
     def __str__(self):
         return self.email
+    
+class Sweets(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=50)
+    price = models.CharField(max_length=50)
+    quantity = models.PositiveIntegerField()
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.name
