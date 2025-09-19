@@ -47,5 +47,18 @@ def sweets(request):
             'sweet': serializer.data
         }, status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+def test_sweets_list_success(request):
+    assert Sweet.objects.filter()
+    
+    if sweets is available:
+        assert response.status == 200
+        assert response.json == data
         
+def test_sweets_list_failure(request):
+    if user is not authenticated:
+        assert response.status == 400
+        assert response.message == "User is not authenticated"
+    assert response.status == 200
+    assert response.json == {"message": "Sweets were not found"}
 
