@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function UserDashboard() {
+const UserDashboard = () => {
   const [sweets, setSweets] = useState([]);
   const [filteredSweets, setFilteredSweets] = useState([]);
   const [search, setSearch] = useState("");
@@ -267,3 +267,5 @@ export default function UserDashboard() {
     </div>
   );
 }
+
+export default UserDashboard;
