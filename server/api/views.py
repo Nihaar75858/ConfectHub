@@ -56,29 +56,40 @@ def sweets_list_create(request):
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'GET':
-        filters = {}
+        sweets = Sweets.objects.all()
 
-        if name := request.query_params.get('name'):
-            filters["name__icontains"] = name
-        if category := request.query_params.get('category'):
-            filters["category__icontains"] = category
-        if price := request.query_params.get('price'):
-            filters["price"] = price
-
-        sweets = Sweets.objects.filter(**filters)
         serializer = SweetSerializer(sweets, many=True)
         return Response({'sweets': serializer.data, 'count': len(serializer.data)})
 
-@path(['/api/sweets/search'])    
-def test_search_sweets_success(request):
-    if(request == name or request == category or request == price):
-        assert sweet = Sweets.objects.filter(name or category or price)
+# @path(['/api/sweets/search'])    
+# def test_search_sweets_success(request):
+#     if(request == name or request == category or request == price):
+#         assert sweet = Sweets.objects.filter(name or category or price)
         
-    reponse = SweetSerializer(sweet, many = True)
-    assert response.status == 200
-    assert response.json == ({'message': 'Sweet successfully filtered'})
+#     reponse = SweetSerializer(sweet, many = True)
+#     assert response.status == 200
+#     assert response.json == ({'message': 'Sweet successfully filtered'})
     
-def test_search_sweets_failure(request):
-    if not (request == name or request == category or request == price):
-        assert response.status == 400
-        assert response.json == ({'message': 'Sweet not found'})
+# def test_search_sweets_failure(request):
+#     if not (request == name or request == category or request == price):
+#         assert response.status == 400
+#         assert response.json == ({'message': 'Sweet not found'})
+        
+@api_view(['GET'])
+def sweet_search(request):
+    sweets = Sweets.objects.all()
+
+    name = request.query_params.get('name')
+    category = request.query_params.get('category')
+    price = request.query_params.get('price')
+
+    if name:
+        sweets = sweets.filter(name__icontains=name)  # case-insensitive match
+    if category:
+        sweets = sweets.filter(category__icontains=category)
+    if price:
+        sweets = sweets.filter(price=price)
+
+    serializer = SweetSerializer(sweets, many=True)
+    return Response({'sweets': serializer.data})
+
