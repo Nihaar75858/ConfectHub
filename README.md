@@ -59,41 +59,27 @@ This website allows users to view and buy sweets of all types. They can search a
 ## Project Structure
 
 confecthub/
+├── server/                   # Django backend
+│   ├── api/                  # API logic (views, serializers, urls, etc.)
+│   ├── __pycache__/          # Python cache files
+│   ├── migrations/           # Django migration files
+│   ├── db.sqlite3            # SQLite database
+│   └── manage.py             # Django project manager
 │
-├── server/ 
-│   ├── api/    
-|   |   ├──pycache/
-|   |   |   └──  ...
-|   |   ├──migrations/
-|   |   |   └──  ... 
-|   |   ├── ...
-│   ├── server/
-|   |   ├── pycache
-|   |   |   └── ...   
-|   |   └── ...
-│   ├── db.sqlite3
-|   └── manage.py
+├── client/                   # React frontend
+│   ├── public/               # Public assets
+│   └── src/                  # React source files
+│       ├── components/       # Reusable components
+│       ├── pages/            # Page-level components
+│       │   ├── Admin/        # Admin-related pages
+│       │   ├── Auth/         # Authentication (Login/Register)
+│       │   └── Dashboard/    # User dashboard
+│       ├── App.css
+│       ├── App.jsx
+│       ├── index.css
+│       └── main.jsx
 │
-├── client/       # React frontend
-│   ├── public/
-|   |   └── ...
-│   ├── src/
-|   |   ├── components/
-|   |   |   └── ..
-|   |   ├── pages/
-|   |   |   ├── Admin/
-|   |   |   |   └──  ...
-|   |   |   ├── Auth/
-|   |   |   |   └──  ...
-|   |   |   ├── Dashboard /
-|   |   |   |   └── ...
-|   |   ├── App.css
-|   |   ├── App.jsx
-|   |   ├── index.css
-|   |   └── main.jsx
-│   └── ...
-│
-└── README.md
+└── README.md                 # Project documentation
 
 ## My AI Usage
 
