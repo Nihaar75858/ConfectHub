@@ -14,6 +14,16 @@ export default function Login() {
     });
   };
 
+  const decodeJWT = (token) => {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload;
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+      return null;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,8 +43,19 @@ export default function Login() {
         localStorage.setItem("access_token", data.access);
         localStorage.setItem("refresh_token", data.refresh);
         // Redirect to dashboard
+        const tokenPayload = decodeJWT(data.access);
+        const userRole = tokenPayload?.role || "user";
+
+        console.log(userRole);
+
+        alert(`Login successful! Role: ${userRole}`); 
+
         setTimeout(() => {
-          window.location.href = "/userdashboard";
+          if (userRole === "admin") {
+            window.location.href = "/admindashboard";
+          } else {
+            window.location.href = "/userdashboard";
+          }
         }, 1000);
       } else {
         setMessage("Login failed", data.message);
