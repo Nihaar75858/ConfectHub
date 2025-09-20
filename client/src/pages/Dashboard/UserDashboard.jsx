@@ -90,7 +90,6 @@ export default function UserDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Helper function to make authenticated requests
   const makeAuthenticatedRequest = async (url, options = {}) => {
     const token = localStorage.getItem("access_token");
     console.log("Found token in function", token);
@@ -110,7 +109,6 @@ export default function UserDashboard() {
 
     const response = await fetch(url, config);
 
-    // Handle token expiration
     if (response.status === 401) {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
@@ -130,7 +128,6 @@ export default function UserDashboard() {
     return response.json();
   };
 
-  // Fetch user data and sweets on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -191,7 +188,6 @@ export default function UserDashboard() {
     setFilteredSweets(filtered);
   }, [search, filter, sweets]);
 
-  // Handle search functionality
   const handleSearch = async () => {
     if (!search && !filter) {
       setFilteredSweets(sweets);
@@ -202,7 +198,6 @@ export default function UserDashboard() {
       const queryParams = new URLSearchParams();
       if (search) queryParams.append("name", search);
       if (filter) {
-        // Check if filter is a number (price) or text (category)
         if (isNaN(filter)) {
           queryParams.append("category", filter);
         } else {
@@ -224,7 +219,6 @@ export default function UserDashboard() {
     }
   };
 
-  // Handle purchase
   const handlePurchase = async (sweetId, index) => {
     try {
       sweetId += 1
@@ -238,7 +232,6 @@ export default function UserDashboard() {
 
       console.log("Purchase successful:", purchaseData);
 
-      // Update local state
       setSweets((prev) =>
         prev.map((sweet) =>
           sweet.id === sweetId
@@ -247,7 +240,6 @@ export default function UserDashboard() {
         )
       );
 
-      // Update filtered sweets as well
       setFilteredSweets((prev) =>
         prev.map((sweet) =>
           sweet.id === sweetId

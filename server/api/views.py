@@ -29,7 +29,6 @@ def login(request):
     serializer = LoginSerializer(data = request.data)
     print("Data from frontend", request.data) 
     if serializer.is_valid():
-        print("Serializer errors:", serializer.errors)
         user = serializer.validated_data['user']
         refresh = RefreshToken.for_user(user)
         return Response({
@@ -79,25 +78,25 @@ def sweet_search(request):
     serializer = SweetSerializer(sweets, many=True)
     return Response({'sweets': serializer.data})
         
-@api_view(['PUT'])
+@api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
-def sweet_purchase(purchase, sweet_id):
+def sweet_purchase(request, sweet_id):
     try: 
         sweet = Sweets.objects.get(id = sweet_id)
     except Sweets.DoesNotExist():
         return Response({
             "error": "Sweet not found"
         }, status=status.HTTP_400_BAD_REQUEST)
+        
+    quantity = request.data.get('quantity', 1) 
     
-    purchase_quantity = purchase.data.get("quantity", 0)
-    
-    if not isinstance(purchase_quantity, int) or purchase_quantity <= 0:
+    if not isinstance(quantity, int) or quantity <= 0:
         return Response({"error": "Invalid purchase quantity"}, status=status.HTTP_400_BAD_REQUEST)
     
-    if sweet.quantity < purchase_quantity:
+    if sweet.quantity < quantity:
         return Response({"error": "Not enough stock"}, status=status.HTTP_400_BAD_REQUEST)
     
-    sweet.quantity -= purchase_quantity
+    sweet.quantity -= quantity
     sweet.save()
     
     serializer = SweetSerializer(sweet)

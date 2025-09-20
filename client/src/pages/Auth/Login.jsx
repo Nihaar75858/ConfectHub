@@ -25,7 +25,6 @@ export default function Login() {
     password: "",
   });
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = async (e) => {
     setFormData({
