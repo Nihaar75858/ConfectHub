@@ -8,6 +8,7 @@ from .serializer import RegisterSerializer, LoginSerializer, SweetSerializer
 from .permissions import IsAdmin, IsAdminOrReadOnly
 import json
 
+# AUTHORISATION
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -37,6 +38,7 @@ def login(request):
         })
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
+# SWEETS (PROTECTED)
 @api_view(['GET', 'POST'])
 @permission_classes([permissions.IsAuthenticated])
 def sweets_list_create(request):
@@ -77,7 +79,26 @@ def sweet_search(request):
     sweets = Sweets.objects.filter(**filters)
     serializer = SweetSerializer(sweets, many=True)
     return Response({'sweets': serializer.data})
-        
+
+@path(['/api/sweets/:id', 'PUT'])
+def test_update_sweet_details_success(request, sweetId):
+    sweet = db.objects.get(id = sweetId)
+    
+    db.session.update(sweet, data = request.data, partial = True)
+    db.save()
+    
+    assert response.status_code == 200
+    assert response.json == {"message": "Sweet Details successfully updated."}
+    
+def test_update_sweet_details_success(request, sweetId):
+    if db.objects.get(id = sweetId) does not exist:
+        assert response.status_code == 400
+        assert response.json == {"message": "Sweet not found."}
+    
+    assert response.status_code == 400
+    assert response.json == {"message": "Sweet Details not updated."}
+
+# INVENTORY (PROTECTED)        
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def sweet_purchase(request, sweet_id):
@@ -104,7 +125,6 @@ def sweet_purchase(request, sweet_id):
         "message": "Purchase Successful",
         "sweet": serializer.data
     }, status=status.HTTP_200_OK)
-    
     
     
 

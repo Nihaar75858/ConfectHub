@@ -1,23 +1,4 @@
-// import { render, screen, fireEvent } from "@testing/library";
-// import LoginForm from "/LoginForm";
-
-// test("User should add their email and password which are cross-verfied and then logged in", async () => {
-//   render(<LoginForm />);
-
-//   fireEvent.change(screen.getByPlaceholderText(/Email/), {
-//     target: { value: "testuser@example.com" },
-//   });
-//   fireEvent.change(screen.getByPlaceholderText(/Password/), {
-//     target: { value: "secret123" },
-//   });
-//   fireEvent.click(screen.getByText(/Login/));
-
-//   const message = await screen.findByText(/Login successful/);
-//   expect(message).toBeInTheDocument();
-// });
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({
