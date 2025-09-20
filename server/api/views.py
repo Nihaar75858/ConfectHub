@@ -80,23 +80,37 @@ def sweet_search(request):
     serializer = SweetSerializer(sweets, many=True)
     return Response({'sweets': serializer.data})
 
-@path(['/api/sweets/:id', 'PUT'])
-def test_update_sweet_details_success(request, sweetId):
-    sweet = db.objects.get(id = sweetId)
+# @path(['/api/sweets/:id', 'PUT'])
+# def test_update_sweet_details_success(request, sweetId):
+#     sweet = db.objects.get(id = sweetId)
     
-    db.session.update(sweet, data = request.data, partial = True)
-    db.save()
+#     db.session.update(sweet, data = request.data, partial = True)
+#     db.save()
     
-    assert response.status_code == 200
-    assert response.json == {"message": "Sweet Details successfully updated."}
+#     assert response.status_code == 200
+#     assert response.json == {"message": "Sweet Details successfully updated."}
     
-def test_update_sweet_details_success(request, sweetId):
-    if db.objects.get(id = sweetId) does not exist:
-        assert response.status_code == 400
-        assert response.json == {"message": "Sweet not found."}
+# def test_update_sweet_details_success(request, sweetId):
+#     if db.objects.get(id = sweetId) does not exist:
+#         assert response.status_code == 400
+#         assert response.json == {"message": "Sweet not found."}
     
-    assert response.status_code == 400
-    assert response.json == {"message": "Sweet Details not updated."}
+#     assert response.status_code == 400
+#     assert response.json == {"message": "Sweet Details not updated."}
+
+@api_view(['PUT'])
+@permission_classes([AllowAny])
+def update_sweet_details(request, sweet_id):
+    sweet = Sweets.objects.get(id = sweet_id)
+    
+    serializer = SweetSerializer(sweet, data = request.data, partial = True)
+    
+    if serializer.is_valid():
+        serializer.save()
+        return Response({
+            "message": 'Sweet Details Updated Successfully'
+        }, status = status.HTTP_200_OK)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 # INVENTORY (PROTECTED)        
 @api_view(['POST'])
