@@ -166,13 +166,27 @@ def sweet_purchase(request, sweet_id):
     
 @api_view(['POST'])
 def sweet_restock(request, sweet_id):
-    sweet = Sweets.objects.get(id = sweet_id)
+    try:
+        sweet = Sweets.objects.get(id = sweet_id)
+    except Sweets.DoesNotExist():
+        return Response({
+            "error": "Sweet not found"
+        }, status=status.HTTP_400_BAD_REQUEST)
     
     quantity_to_add = request.data.get("quantity", 0)
+    
+    if quantity_to_add <= 0:
+        return Response({
+            "error": "Quantity must be positive"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
     
     sweet.quantity += quantity_to_add
     sweet.save()
 
     return Response({
-        "message": "Restock Successful"
+        "message": "Restock Successful",
+        "sweet": sweet.name,
+        "quantity_added": quantity_to_add,
+        "new_stock": sweet.quantity
     }, status = status.HTTP_200_OK)
