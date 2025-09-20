@@ -81,7 +81,7 @@ def sweet_search(request):
     return Response({'sweets': serializer.data})
 
 @api_view(['PUT'])
-@permission_classes([permissions.AdminOnly])
+@permission_classes([AllowAny])
 def update_sweet_details(request, sweet_id):
     try:
         sweet = Sweets.objects.get(id = sweet_id)
@@ -100,20 +100,28 @@ def update_sweet_details(request, sweet_id):
         }, status = status.HTTP_200_OK)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-@path(['/api/sweets/:id', 'PUT'])
-def test_delete_sweet_success(request, sweetId):
-    sweet = db.objects.get(id = sweetId)
+# @path(['/api/sweets/:id', 'PUT'])
+# def test_delete_sweet_success(request, sweetId):
+#     sweet = db.objects.get(id = sweetId)
     
-    db.session.delete(sweet, data = request.data)
-    db.save()
+#     db.session.delete(sweet, data = request.data)
+#     db.save()
     
-    assert response.status_code == 204
-    assert response.json == {"message": "Sweet is successfully deleted."}
+#     assert response.status_code == 204
+#     assert response.json == {"message": "Sweet is successfully deleted."}
     
-def test_delete_sweet_failure(request, sweetId):
-    if db.objects.get(id = sweetId) does not exist:
-        assert response.status_code == 404
-        assert response.json == {"message": "Sweet not found."}
+# def test_delete_sweet_failure(request, sweetId):
+#     if db.objects.get(id = sweetId) does not exist:
+#         assert response.status_code == 404
+#         assert response.json == {"message": "Sweet not found."}
+        
+@api_view(['DELETE'])
+def delete_sweet(request, sweet_id):
+    sweet = Sweets.objects.get(id = sweet_id)
+    sweet.delete()
+    return Response({
+        "message": "Sweet is successfully deleted."
+    }, status = status.HTTP_204_NO_CONTENT)
 
 # INVENTORY (PROTECTED)        
 @api_view(['POST'])
