@@ -36,30 +36,36 @@ def login(request):
         })
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-@permission_classes([permissions.AllowAny])
-def sweets(request):
-    serializer = SweetSerializer(data = request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response({
-            'message': 'Sweet added successfully',
-            'sweet': serializer.data
-        }, status = status.HTTP_201_CREATED)
-    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+@api_view(['GET', 'POST'])
+@permission_classes([permissions.isAuthenticated])
+def sweets_list_create(request):
+    if request.method == 'POST':
+        if not (request.user.is_authenticated and request.user.role == 'admin'):
+            return Response(
+                {'error': 'Admin access required'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+            
+        serializer = SweetSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'message': 'Sweet added successfully',
+                'sweet': serializer.data
+            }, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'GET':
+        filters = {}
 
-@api_view(['GET'])
-@permission_classes([permissions.AllowAny])
-def sweets_list(request):
-    filters = {}
+        if name := request.query_params.get('name'):
+            filters["name__icontains"] = name
+        if category := request.query_params.get('category'):
+            filters["category__icontains"] = category
+        if price := request.query_params.get('price'):
+            filters["price"] = price
 
-    if name := request.query_params.get('name'):
-        filters["name__icontains"] = name
-    if category := request.query_params.get('category'):
-        filters["category__icontains"] = category
-    if price := request.query_params.get('price'):
-        filters["price"] = price
+        sweets = Sweets.objects.filter(**filters)
+        serializer = SweetSerializer(sweets, many=True)
+        return Response({'sweets': serializer.data, 'count': len(serializer.data)})
 
-    sweets = Sweets.objects.filter(**filters)
-    serializer = SweetSerializer(sweets, many=True)
-    return Response({'sweets': serializer.data})
