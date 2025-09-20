@@ -101,14 +101,20 @@ def sweet_search(request):
 @api_view(['PUT'])
 @permission_classes([AllowAny])
 def update_sweet_details(request, sweet_id):
-    sweet = Sweets.objects.get(id = sweet_id)
+    try:
+        sweet = Sweets.objects.get(id = sweet_id)
+    except Sweets.DoesNotExist():
+        return Response({
+            "error": "Sweet does not exist",
+        }, status = status.HTTP_404_NOT_FOUND)
     
     serializer = SweetSerializer(sweet, data = request.data, partial = True)
     
     if serializer.is_valid():
         serializer.save()
         return Response({
-            "message": 'Sweet Details Updated Successfully'
+            "message": 'Sweet Details Updated Successfully',
+            "sweet": serializer.data
         }, status = status.HTTP_200_OK)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
