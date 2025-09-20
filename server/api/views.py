@@ -140,29 +140,39 @@ def sweet_purchase(request, sweet_id):
         "sweet": serializer.data
     }, status=status.HTTP_200_OK)
     
-@path(['/api/sweets/:id/restock', 'POST'])
-def test_restock_sweet_success(request, sweetId):
-    sweet = db.objects.get(id = sweetId)
+# @path(['/api/sweets/:id/restock', 'POST'])
+# def test_restock_sweet_success(request, sweetId):
+#     sweet = db.objects.get(id = sweetId)
     
-    quantity_to_add = request.data.get("quanity", 0)
+#     quantity_to_add = request.data.get("quanity", 0)
+    
+#     sweet.quantity += quantity_to_add
+#     sweet.save()
+    
+#     assert response.status_code == 200
+#     assert response.json == {"message": "Sweet Restocked successfully."}
+    
+# def test_restock_sweet_success(request, sweetId):
+#     if db.objects.get(id = sweetId) does not exist:
+#         assert response.status_code == 400
+#         assert response.json == {"message": "Sweet not found."}
+        
+#     if quantity <= 0:
+#         assert response.status_code == 400
+#         assert response.json == {"message": "Quantity must be greater than 0."}
+    
+#     assert response.status_code == 400
+#     assert response.json == {"message": "Sweet is not Restocked."}
+    
+@api_view(['POST'])
+def sweet_restock(request, sweet_id):
+    sweet = Sweets.objects.get(id = sweet_id)
+    
+    quantity_to_add = request.data.get("quantity", 0)
     
     sweet.quantity += quantity_to_add
     sweet.save()
-    
-    assert response.status_code == 200
-    assert response.json == {"message": "Sweet Restocked successfully."}
-    
-def test_restock_sweet_success(request, sweetId):
-    if db.objects.get(id = sweetId) does not exist:
-        assert response.status_code == 400
-        assert response.json == {"message": "Sweet not found."}
-        
-    if quantity <= 0:
-        assert response.status_code == 400
-        assert response.json == {"message": "Quantity must be greater than 0."}
-    
-    assert response.status_code == 400
-    assert response.json == {"message": "Sweet is not Restocked."}
-    
-    
 
+    return Response({
+        "message": "Restock Successful"
+    }, status = status.HTTP_200_OK)
