@@ -77,32 +77,50 @@ def sweet_search(request):
     serializer = SweetSerializer(sweets, many=True)
     return Response({'sweets': serializer.data})
 
-@path(['/api/sweets/:id/purchase'], permission_classes: permissions.IsAuthenticated)
-def test_sweet_purchase_success(purchase, sweet_id):
-    sweet = Sweets.object.get(id = sweet_id)
+# @path(['/api/sweets/:id/purchase'], permission_classes: permissions.IsAuthenticated)
+# def test_sweet_purchase_success(purchase, sweet_id):
+#     sweet = Sweets.object.get(id = sweet_id)
 
-    quantity = Sweets.data.get("quantity", 0)
+#     quantity = purchase.data.get("quantity", 0)
     
-    sweet.quantity -= quantity
+#     sweet.quantity -= quantity
+#     sweet.save()
+    
+#     assert purchase.status_code == 200
+#     assert purchase.json == {"message": "Purchase is successful"}
+
+# def test_sweet_purchase_failure(purchase, sweet_id):
+#     sweet = Sweets.object.get(id = sweet_id)
+#     if(sweet == null):
+#         assert purchase.status_code == 400
+#         assert purchase.json == {"message": "Sweet not found"}
+        
+#     if(purchase < 0 or purchase is not number):
+#         assert purchase.status_code == 406
+#         assert purchase.json == {"message": "Value should be positive numeric"}
+
+#     quantity = Sweets.data.get("quantity", 0)
+    
+#     if(quantity < purchase):
+#         assert purchase.status_code == 400
+#         assert purchase.json == {"message": "Not enough sweet"}
+        
+@api_view(['PUT'])
+@permission_classes([AllowAny])
+def sweet_purchase(purchase, sweet_id):
+    sweet = Sweets.objects.get(id = sweet_id)
+    
+    purchase_quantity = purchase.data.get("quantity", 0)
+    
+    sweet.quantity -= purchase_quantity
     sweet.save()
     
-    assert purchase.status_code == 200
-    assert purchase.json == {"message": "Purchase is successful"}
-
-def test_sweet_purchase_failure(purchase, sweet_id):
-    sweet = Sweets.object.get(id = sweet_id)
-    if(sweet == null):
-        assert purchase.status_code == 400
-        assert purchase.json == {"message": "Sweet not found"}
-        
-    if(purchase < 0 or purchase is not number):
-        assert purchase.status_code == 406
-        assert purchase.json == {"message": "Value should be positive numeric"}
-
-    quantity = Sweets.data.get("quantity", 0)
+    serializer = SweetSerializer(sweet)
+    return Response({
+        "message": "Purchase Successful",
+        "sweet": serializer.data
+    }, status=status.HTTP_200_OK)
     
-    if(quantity < purchase):
-        assert purchase.status_code == 400
-        assert purchase.json == {"message": "Not enough sweet"}
+    
     
 
