@@ -77,18 +77,6 @@ def sweet_search(request):
     serializer = SweetSerializer(sweets, many=True)
     return Response({'sweets': serializer.data})
 
-# @path(['/api/sweets/:id/purchase'], permission_classes: permissions.IsAuthenticated)
-# def test_sweet_purchase_success(purchase, sweet_id):
-#     sweet = Sweets.object.get(id = sweet_id)
-
-#     quantity = purchase.data.get("quantity", 0)
-    
-#     sweet.quantity -= quantity
-#     sweet.save()
-    
-#     assert purchase.status_code == 200
-#     assert purchase.json == {"message": "Purchase is successful"}
-
 # def test_sweet_purchase_failure(purchase, sweet_id):
 #     sweet = Sweets.object.get(id = sweet_id)
 #     if(sweet == null):
@@ -106,11 +94,22 @@ def sweet_search(request):
 #         assert purchase.json == {"message": "Not enough sweet"}
         
 @api_view(['PUT'])
-@permission_classes([AllowAny])
+@permission_classes([permissions.IsAuthenticated])
 def sweet_purchase(purchase, sweet_id):
-    sweet = Sweets.objects.get(id = sweet_id)
+    try: 
+        sweet = Sweets.objects.get(id = sweet_id)
+    except Sweets.DoesNotExist():
+        return Response({
+            "error": "Sweet not found"
+        }, status=status.HTTP_400_BAD_REQUEST)
     
     purchase_quantity = purchase.data.get("quantity", 0)
+    
+    if not isinstance(purchase_quantity, int) or purchase_quantity <= 0:
+        return Response({"error": "Invalid purchase quantity"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if sweet.quantity < purchase_quantity:
+        return Response({"error": "Not enough stock"}, status=status.HTTP_400_BAD_REQUEST)
     
     sweet.quantity -= purchase_quantity
     sweet.save()
