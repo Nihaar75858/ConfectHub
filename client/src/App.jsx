@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import './App.css'
 import Register from './pages/Auth/Register'
-import UserDashboard from './pages/Dashboard/UserDashboard'
+import Login from './pages/Auth/Login'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
     <Routes>
       <Route path='/register' element={<Register />}/>
-      <Route path='/' element={<UserDashboard />}/>
+      <Route path='/login' element={<Login />}/>
     </Routes>
   )
 }

@@ -27,7 +27,9 @@ def register(request):
 @permission_classes([AllowAny])
 def login(request):
     serializer = LoginSerializer(data = request.data)
+    print("Data from frontend", request.data) 
     if serializer.is_valid():
+        print("Serializer errors:", serializer.errors)
         user = serializer.validated_data['user']
         refresh = RefreshToken.for_user(user)
         return Response({
@@ -76,22 +78,6 @@ def sweet_search(request):
     sweets = Sweets.objects.filter(**filters)
     serializer = SweetSerializer(sweets, many=True)
     return Response({'sweets': serializer.data})
-
-# def test_sweet_purchase_failure(purchase, sweet_id):
-#     sweet = Sweets.object.get(id = sweet_id)
-#     if(sweet == null):
-#         assert purchase.status_code == 400
-#         assert purchase.json == {"message": "Sweet not found"}
-        
-#     if(purchase < 0 or purchase is not number):
-#         assert purchase.status_code == 406
-#         assert purchase.json == {"message": "Value should be positive numeric"}
-
-#     quantity = Sweets.data.get("quantity", 0)
-    
-#     if(quantity < purchase):
-#         assert purchase.status_code == 400
-#         assert purchase.json == {"message": "Not enough sweet"}
         
 @api_view(['PUT'])
 @permission_classes([permissions.IsAuthenticated])
