@@ -1,9 +1,9 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Register
+from .models import Register, Sweets
 from .serializer import RegisterSerializer, LoginSerializer, SweetSerializer
 from .permissions import IsAdmin, IsAdminOrReadOnly
 import json
@@ -48,17 +48,21 @@ def sweets(request):
         }, status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-def test_sweets_list_success(request):
-    assert Sweet.objects.filter()
-    
-    if sweets is available:
-        assert response.status == 200
-        assert response.json == data
-        
-def test_sweets_list_failure(request):
-    if user is not authenticated:
-        assert response.status == 400
-        assert response.message == "User is not authenticated"
-    assert response.status == 200
-    assert response.json == {"message": "Sweets were not found"}
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticatedOrReadOnly])
+def sweets_list(request):
+    sweets = Sweets.objects.all()
+    name = request.query_params.get('name')
+    category = request.query_params.get('category')
+    price = request.query_params.get('price')
 
+    if name:
+        sweets = sweets.filter(name__icontains=name)
+    if category:
+        sweets = sweets.filter(category__icontains=category)
+    if price:
+        sweets = sweets.filter(price=price)
+    serializer = SweetSerializer(sweets, many = True)
+    return Response({
+        'sweets': serializer.data,
+    })
