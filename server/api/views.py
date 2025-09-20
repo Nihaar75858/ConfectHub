@@ -80,48 +80,37 @@ def sweet_search(request):
     serializer = SweetSerializer(sweets, many=True)
     return Response({'sweets': serializer.data})
 
-@api_view(['PUT'])
+@api_view(['PUT', 'DELETE'])
 @permission_classes([AllowAny])
-def update_sweet_details(request, sweet_id):
-    try:
-        sweet = Sweets.objects.get(id = sweet_id)
-    except Sweets.DoesNotExist():
-        return Response({
-            "error": "Sweet does not exist",
-        }, status = status.HTTP_404_NOT_FOUND)
-    
-    serializer = SweetSerializer(sweet, data = request.data, partial = True)
-    
-    if serializer.is_valid():
-        serializer.save()
-        return Response({
-            "message": 'Sweet Details Updated Successfully',
-            "sweet": serializer.data
-        }, status = status.HTTP_200_OK)
-    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-
-# @path(['/api/sweets/:id', 'PUT'])
-# def test_delete_sweet_success(request, sweetId):
-#     sweet = db.objects.get(id = sweetId)
-    
-#     db.session.delete(sweet, data = request.data)
-#     db.save()
-    
-#     assert response.status_code == 204
-#     assert response.json == {"message": "Sweet is successfully deleted."}
-    
-# def test_delete_sweet_failure(request, sweetId):
-#     if db.objects.get(id = sweetId) does not exist:
-#         assert response.status_code == 404
-#         assert response.json == {"message": "Sweet not found."}
+def update_delete_sweet_details(request, sweet_id):
+    if request.method == 'PUT':
+        try:
+            sweet = Sweets.objects.get(id = sweet_id)
+        except Sweets.DoesNotExist():
+            return Response({
+                "error": "Sweet does not exist",
+            }, status = status.HTTP_404_NOT_FOUND)
         
-@api_view(['DELETE'])
-def delete_sweet(request, sweet_id):
-    sweet = Sweets.objects.get(id = sweet_id)
-    sweet.delete()
-    return Response({
-        "message": "Sweet is successfully deleted."
-    }, status = status.HTTP_204_NO_CONTENT)
+        serializer = SweetSerializer(sweet, data = request.data, partial = True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                "message": 'Sweet Details Updated Successfully',
+                "sweet": serializer.data
+            }, status = status.HTTP_200_OK)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        try: 
+            sweet = Sweets.objects.get(id = sweet_id)
+            sweet.delete()
+            return Response({
+                "message": "Sweet is successfully deleted."
+            }, status = status.HTTP_204_NO_CONTENT)
+        except Sweets.DoesNotExist:
+            return Response({
+                "error": "Sweet Not Found"
+            }, status = status.HTTP_404_NOT_FOUND)
 
 # INVENTORY (PROTECTED)        
 @api_view(['POST'])
