@@ -221,7 +221,7 @@ export default function UserDashboard() {
 
   const handlePurchase = async (sweetId, index) => {
     try {
-      sweetId += 1
+      sweetId += 1;
       const purchaseData = await makeAuthenticatedRequest(
         `http://localhost:8000/api/sweets/${sweetId}/purchase/`,
         {
@@ -276,38 +276,75 @@ export default function UserDashboard() {
   }
 
   return (
-    <div>
-      <h1>Welcome to your Dashboard</h1>
+    <div className="min-h-screen p-8">
+      <h1 className="text-5xl font-bold text-center mb-8 text-black">
+        Welcome to your Dashboard
+      </h1>
 
-      <section>
-        <h2>Search & Filter</h2>
-        <input
-          placeholder="search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <input
-          placeholder="filter"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
+      <section className="mb-8 bg-white p-6">
+        <h2 className="text-xl font-semibold text-blue-700 mb-4">
+          Search & Filter
+        </h2>
+        <div className="flex gap-4">
+          <input
+            placeholder="Search sweets..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            placeholder="Filter"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+        </div>
       </section>
 
-      <section>
-        <h2>Sweets</h2>
-        {filteredSweets.map((s, idx) => (
-          <div key={idx}>
-            <p>
-              {s.name} - {s.category} - {s.price} - {s.quantity}
-            </p>
-            <button
-              onClick={() => handlePurchase(idx)}
-              disabled={s.quantity === 0}
+      <section className="bg-white rounded-lg p-6">
+        <h2 className="text-xl font-semibold text-pink-700 mb-4">Sweets</h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredSweets.map((s, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl shadow-lg overflow-hidden bg-white flex flex-col"
             >
-              Purchase
-            </button>
-          </div>
-        ))}
+              <div className="h-40 w-full bg-yellow-500 flex items-center justify-center">
+                {s.image ? (
+                  <img
+                    src={s.image}
+                    alt={s.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-white font-semibold"></span>
+                )}
+              </div>
+
+              <div className="flex flex-col justify-between flex-1 p-4">
+                <div className="mb-4">
+                  <h3 className="text-lg font-bold text-gray-800">{s.name}</h3>
+                  <p className="text-sm text-gray-600">{s.category}</p>
+                  <p className="text-sm text-gray-700">₹{s.price}</p>
+                  <p className="text-sm text-gray-700">Qty: {s.quantity}</p>
+                </div>
+
+                <button
+                  onClick={() => handlePurchase(idx)}
+                  disabled={s.quantity === 0}
+                  className={`w-full px-4 py-2 rounded-md font-semibold text-white transition ${
+                    s.quantity === 0
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-600"
+                  }`}
+                >
+                  Purchase
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );
