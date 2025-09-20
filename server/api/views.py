@@ -37,7 +37,7 @@ def login(request):
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-@permission_classes([IsAdmin])
+@permission_classes([permissions.AllowAny])
 def sweets(request):
     serializer = SweetSerializer(data = request.data)
     if serializer.is_valid():
@@ -49,20 +49,17 @@ def sweets(request):
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticatedOrReadOnly])
+@permission_classes([permissions.AllowAny])
 def sweets_list(request):
-    sweets = Sweets.objects.all()
-    name = request.query_params.get('name')
-    category = request.query_params.get('category')
-    price = request.query_params.get('price')
+    filters = {}
 
-    if name:
-        sweets = sweets.filter(name__icontains=name)
-    if category:
-        sweets = sweets.filter(category__icontains=category)
-    if price:
-        sweets = sweets.filter(price=price)
-    serializer = SweetSerializer(sweets, many = True)
-    return Response({
-        'sweets': serializer.data,
-    })
+    if name := request.query_params.get('name'):
+        filters["name__icontains"] = name
+    if category := request.query_params.get('category'):
+        filters["category__icontains"] = category
+    if price := request.query_params.get('price'):
+        filters["price"] = price
+
+    sweets = Sweets.objects.filter(**filters)
+    serializer = SweetSerializer(sweets, many=True)
+    return Response({'sweets': serializer.data})
