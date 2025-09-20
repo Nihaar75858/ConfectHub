@@ -69,3 +69,16 @@ def sweets_list_create(request):
         serializer = SweetSerializer(sweets, many=True)
         return Response({'sweets': serializer.data, 'count': len(serializer.data)})
 
+@path(['/api/sweets/search'])    
+def test_search_sweets_success(request):
+    if(request == name or request == category or request == price):
+        assert sweet = Sweets.objects.filter(name or category or price)
+        
+    reponse = SweetSerializer(sweet, many = True)
+    assert response.status == 200
+    assert response.json == ({'message': 'Sweet successfully filtered'})
+    
+def test_search_sweets_failure(request):
+    if not (request == name or request == category or request == price):
+        assert response.status == 400
+        assert response.json == ({'message': 'Sweet not found'})
