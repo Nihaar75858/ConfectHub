@@ -17,6 +17,7 @@
 // });
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -24,6 +25,7 @@ export default function Login() {
     password: "",
   });
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = async (e) => {
     setFormData({
@@ -47,10 +49,16 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         setMessage("Login successful");
-        alert("Login successful")
+        alert("Login successful");
+        localStorage.setItem("access_token", data.access);
+        localStorage.setItem("refresh_token", data.refresh);
+        // Redirect to dashboard
+        setTimeout(() => {
+          window.location.href = "/userdashboard";
+        }, 1000);
       } else {
         setMessage("Login failed", data.message);
-        alert("Login failed")
+        alert("Login failed");
       }
     } catch (error) {
       console.log(error);
