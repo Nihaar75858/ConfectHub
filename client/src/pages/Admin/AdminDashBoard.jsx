@@ -115,6 +115,8 @@ const AdminDashboard = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedSweet, setSelectedSweet] = useState(null);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
 
   const makeAuthenticatedRequest = async (url, options = {}) => {
     const token = localStorage.getItem("access_token");
@@ -170,22 +172,7 @@ const AdminDashboard = () => {
     try {
       const response = await fetch("/api/users");
       const data = await response.json();
-      setUsers(
-        data.users || [
-          {
-            id: 1,
-            name: "John Doe",
-            email: "user@example.com",
-            username: "John",
-          },
-          {
-            id: 2,
-            name: "Jane Smith",
-            email: "jane@example.com",
-            username: "Jane",
-          },
-        ]
-      );
+      setUsers(data.users);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -200,10 +187,8 @@ const AdminDashboard = () => {
 
       if (sweetsData.sweets && Array.isArray(sweetsData.sweets)) {
         setSweets(sweetsData.sweets);
-        //   setFilteredSweets(sweetsData.sweets);
       } else {
         setSweets([]);
-        //   setFilteredSweets([]);
       }
     } catch (error) {
       console.error("Error fetching sweets:", error);
@@ -212,9 +197,12 @@ const AdminDashboard = () => {
 
   const handleDeleteSweet = async (sweetId) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/sweets/${sweetId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/sweets/${sweetId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         setMessage("sweet deleted");
@@ -244,17 +232,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-blue-600 text-white p-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-          <div className="flex items-center space-x-4">
-            <span>Admin</span>
-            <span>{adminData.email || "user@admin.com"}</span>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="p-6">
         {message && (
@@ -340,7 +317,7 @@ const AdminDashboard = () => {
 
       {/* Modal Forms */}
       {showCreateForm && (
-        <SweetForm
+        <CreateSweet
           onSweetCreated={handleSweetCreated}
           onCancel={() => setShowCreateForm(false)}
         />

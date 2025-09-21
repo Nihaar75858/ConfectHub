@@ -31,11 +31,8 @@ const UserDashboard = () => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       window.location.href = "/login";
-      console.log("Has it reached here?");
       throw new Error("Session expired. Please login again.");
     }
-
-    console.log("Has it passed the if statement here?");
 
     if (!response.ok) {
       console.log("Gone inside here");
@@ -105,37 +102,6 @@ const UserDashboard = () => {
 
     setFilteredSweets(filtered);
   }, [search, filter, sweets]);
-
-  const handleSearch = async () => {
-    if (!search && !filter) {
-      setFilteredSweets(sweets);
-      return;
-    }
-
-    try {
-      const queryParams = new URLSearchParams();
-      if (search) queryParams.append("name", search);
-      if (filter) {
-        if (isNaN(filter)) {
-          queryParams.append("category", filter);
-        } else {
-          queryParams.append("min_price", filter);
-          queryParams.append("max_price", filter);
-        }
-      }
-
-      const searchData = await makeAuthenticatedRequest(
-        `http://localhost:8000/api/sweets/search/?${queryParams.toString()}`
-      );
-
-      if (searchData.sweets && Array.isArray(searchData.sweets)) {
-        setFilteredSweets(searchData.sweets);
-      }
-    } catch (error) {
-      console.error("Search error:", error);
-      setError(error.message);
-    }
-  };
 
   const handlePurchase = async (sweetId, index) => {
     try {

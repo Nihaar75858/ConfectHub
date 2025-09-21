@@ -58,84 +58,90 @@ export default function Register() {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-6 rounded-2xl shadow-md w-96"
-        >
-          <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+      <div className="flex min-h-screen">
+        <div className="w-1/2 flex items-center justify-center bg-amber-500">
+          <img src="/logo.png" alt="Logo" className="w-64 h-auto" />
+        </div>
 
-          <input
-            type="firstName"
-            name="firstName"
-            placeholder="First Name"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 mb-3 border rounded-md"
-          />
-
-          <input
-            type="lastName"
-            name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 mb-3 border rounded-md"
-          />
-
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 mb-3 border rounded-md"
-          />
-
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 mb-3 border rounded-md"
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 mb-3 border rounded-md"
-          />
-
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 mb-3 border rounded-md"
-          />
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+        <div className="w-1/2 flex items-center justify-center bg-white">
+          <form
+            onSubmit={handleSubmit}
+            className="p-8 rounded-2xl w-3/4 max-w-md"
           >
-            Register
-          </button>
+            <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
 
-          {message && (
-            <p className="mt-3 text-center text-sm text-red-600">{message}</p>
-          )}
-        </form>
+            <input
+              type="firstName"
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 mb-3 border rounded-md"
+            />
+
+            <input
+              type="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 mb-3 border rounded-md"
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 mb-3 border rounded-md"
+            />
+
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 mb-3 border rounded-md"
+            />
+
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 mb-3 border rounded-md"
+            />
+
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 mb-3 border rounded-md"
+            />
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            >
+              Register
+            </button>
+
+            {message && (
+              <p className="mt-3 text-center text-sm text-red-600">{message}</p>
+            )}
+          </form>
+        </div>
       </div>
     </>
   );

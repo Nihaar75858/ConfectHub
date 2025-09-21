@@ -55,9 +55,9 @@ const UpdateSweet = ({ sweet, onSweetUpdated, onCancel }) => {
   if (!sweet) return null;
 
   return (
-    <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50 p-6">
+    <div className="fixed inset-0 bg-white/50 flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full mx-4">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Update Sweet: {sweet.name}</h2>
           <button
             onClick={onCancel}

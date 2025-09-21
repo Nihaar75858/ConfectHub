@@ -85,7 +85,7 @@ confecthub/
 
 **Tools Used**
 - ChatGPT (GPT-5)
-- Claude
+- Claude (Sonnet-4)
 
 **How I Used Them**
 - I used ChatGPT to:

@@ -1,24 +1,31 @@
-import { useState } from 'react'
-import './App.css'
-import Register from './pages/Auth/Register'
-import Login from './pages/Auth/Login'
-import UserDashboard from './pages/Dashboard/UserDashboard'
-import AdminDashboard from './pages/Admin/AdminDashBoard'
-import UpdateSweet from './pages/Admin/UpdateSweet'
-import CreateSweet from './pages/Admin/CreateSweet'
-import { Routes, Route } from 'react-router-dom'
+import { useState } from "react";
+import "./App.css";
+import Register from "./pages/Auth/Register";
+import Login from "./pages/Auth/Login";
+import UserDashboard from "./pages/Dashboard/UserDashboard";
+import AdminDashboard from "./pages/Admin/AdminDashBoard";
+import UpdateSweet from "./pages/Admin/UpdateSweet";
+import CreateSweet from "./pages/Admin/CreateSweet";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
+
+  const hideNavbarPaths = ['/login', '/register'];
+  const shouldShowNavbar = !hideNavbarPaths.includes(location.pathname);
   return (
-    <Routes>
-      <Route path='/register' element={<Register />}/>
-      <Route path='/login' element={<Login />}/>
-      <Route path='/userdashboard' element={<UserDashboard />}/>
-      <Route path='/admindashboard' element={<AdminDashboard />}/>
-      <Route path='/createsweet' element={<CreateSweet />}/>
-      <Route path='/updatesweet' element={<UpdateSweet />}/>
-    </Routes>
-  )
+    <main className="overflow-hidden">
+      {shouldShowNavbar && <Navbar />}
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/userdashboard" element={<UserDashboard />} />
+        <Route path="/admin/admindashboard" element={<AdminDashboard />} />
+        <Route path="/admin/createsweet" element={<CreateSweet />} />
+        <Route path="/admin/updatesweet" element={<UpdateSweet />} />
+      </Routes>
+    </main>
+  );
 }
 
-export default App
+export default App;

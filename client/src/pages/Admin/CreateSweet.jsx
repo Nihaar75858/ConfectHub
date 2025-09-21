@@ -33,6 +33,9 @@ const CreateSweet = ({ onSweetCreated, onCancel }) => {
         if (onSweetCreated) {
           onSweetCreated();
         }
+        setTimeout(() => {
+          onCancel();
+        }, 1500);
       }
     } catch (error) {
       console.error('Error creating sweet:', error);
@@ -40,8 +43,8 @@ const CreateSweet = ({ onSweetCreated, onCancel }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full mx-4">
+    <div className="fixed inset-0 bg-white/50 flex items-center justify-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full mx-4 p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Create New Sweet</h2>
           <button
