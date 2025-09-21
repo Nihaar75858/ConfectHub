@@ -19,7 +19,7 @@ const Navbar = () => {
   useEffect(() => {
     const storedRole = localStorage.getItem("access_token");
     const tokenPayload = decodeJWT(storedRole);
-    const userRole = tokenPayload?.role || "user";
+    const userRole = tokenPayload?.role || "guest";
 
     console.log(userRole);
 
@@ -37,7 +37,7 @@ const Navbar = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("role"); // optional, clear role as well
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   return (

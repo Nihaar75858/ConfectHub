@@ -48,8 +48,10 @@ export default function Login() {
         setTimeout(() => {
           if (userRole === "admin") {
             window.location.href = "/admin/admindashboard";
-          } else {
+          } else if (userRole === "user") {
             window.location.href = "/userdashboard";
+          } else {
+            window.location.href = "/"
           }
         }, 1000);
       } else {

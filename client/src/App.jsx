@@ -7,6 +7,7 @@ import UpdateSweet from "./pages/Admin/UpdateSweet";
 import CreateSweet from "./pages/Admin/CreateSweet";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import PubDashboard from "./pages/PublicDashboard/PubDashboard";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/admin/admindashboard" element={<AdminDashboard />} />
         <Route path="/admin/createsweet" element={<CreateSweet />} />
         <Route path="/admin/updatesweet" element={<UpdateSweet />} />
+        <Route path="/" element={<PubDashboard />}/>
       </Routes>
     </main>
   );
