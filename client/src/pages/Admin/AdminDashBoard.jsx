@@ -79,7 +79,7 @@ const AdminDashboard = () => {
   const handleDeleteSweet = async (sweetId) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/sweets/${sweetId}`,
+        `http://localhost:8000/api/sweets/${sweetId}/`,
         {
           method: "DELETE",
         }
@@ -109,6 +109,9 @@ const AdminDashboard = () => {
 
   const handleSweetUpdated = () => {
     fetchSweets();
+    setTimeout(() => {
+      setShowUpdateForm(false);
+    }, 1500);
   };
 
   return (

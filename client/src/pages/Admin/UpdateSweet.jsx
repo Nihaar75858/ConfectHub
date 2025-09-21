@@ -4,6 +4,45 @@ const UpdateSweet = ({ sweet, onSweetUpdated, onCancel }) => {
   const [updateData, setUpdateData] = useState({});
   const [message, setMessage] = useState('');
 
+  const makeAuthenticatedRequest = async (url, options = {}) => {
+    const token = localStorage.getItem("access_token");
+    console.log("Found token in function", token);
+
+    if (!token) {
+      throw new Error("No access token found. Please login again.");
+    }
+
+    const config = {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        ...options.headers,
+      },
+    };
+
+    const response = await fetch(url, config);
+
+    if (response.status === 401) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      window.location.href = "/login";
+      console.log("Has it reached here?");
+      throw new Error("Session expired. Please login again.");
+    }
+
+    console.log("Has it passed the if statement here?");
+
+    if (!response.ok) {
+      console.log("Gone inside here");
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    console.log("Response is brought:", response.json);
+    return response.json();
+  };
+
+
   useEffect(() => {
     if (sweet) {
       setUpdateData({
@@ -25,7 +64,7 @@ const UpdateSweet = ({ sweet, onSweetUpdated, onCancel }) => {
 
   const handleUpdateSweet = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/sweets/${sweet.id}`, {
+      const response = await makeAuthenticatedRequest(`http://localhost:8000/api/sweets/${sweet.id}/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
