@@ -9,6 +9,6 @@ urlpatterns = [
     path('sweets/', sweets_list_create, name='sweets_list_create'),
     path('sweets/search/', sweet_search, name='sweet_search'),
     path('sweets/<int:sweet_id>/purchase/', sweet_purchase, name='sweet_purchase'),
-    path('sweets/<int:sweet_id>', update_delete_sweet_details, name='update_sweet_details'),
+    path('sweets/<int:sweet_id>/', update_delete_sweet_details, name='update_sweet_details'),
     path('sweets/<int:sweet_id>/restock/', sweet_restock, name='sweet_restock')
 ]

@@ -91,6 +91,60 @@ confecthub/
 │
 └── README.md                 # Project documentation
 
+## Screenshots
+
+### Login
+![Login](screenshots/Login.png)
+
+### Register
+![Register](screenshots/Register.png)
+
+### User Dashboard
+![User Dashboard](screenshots/User Dashboard (elongated).png)
+
+### Public Dashboard
+![Public Dashboard](screenshots/Public Dashboard.png)
+
+### Sweet before purchase
+![Sweet before purchase](screenshots/Sweet before purchase.png)
+
+### Sweets are purchased
+![Sweets are purchased](screenshots/Sweets are purchased.png)
+
+### Change quantity
+![Change quantity](screenshots/Change quantity.png)
+
+### Search sweets
+![Search sweets](screenshots/Search sweets.png)
+
+### Search sweets by filter
+![Search sweets by filter](screenshots/Search sweets by filter.png)
+
+### New Sweet is created
+![New Sweet is created](screenshots/New Sweet is created.png)
+
+### Create New Sweet
+![Create New Sweet](screenshots/Create New Sweet.png)
+
+### Add details of the new Sweet
+![Add details of the new Sweet](screenshots/Add details of the new Sweet.png)
+
+### Sweet Updated
+![Sweet Updated](screenshots/Sweet Updated.png)
+
+### Update sweet
+![Update sweet](screenshots/Update sweet.png)
+
+### Sweet to be deleted
+![Sweet to be deleted](screenshots/Sweet to be deleted.png)
+
+### Sweet deleted
+![Sweet deleted](screenshots/Sweet deleted.png)
+
+### All sweets (example image)
+![Sweets](screenshots/sweets.jpg)
+
+
 ## My AI Usage
 
 **Tools Used**
