@@ -118,7 +118,7 @@ confecthub/
 ![Search sweets](screenshots/Search_Sweets.png)
 
 ### Search sweets by filter
-![Search sweets by filter](screenshots/Search_sweets_by_Filter.png)
+![Search sweets by filter](screenshots/Search_Sweets_by_Filter.png)
 
 ### New Sweet is created
 ![New Sweet is created](screenshots/New_Sweet_is_Created.png)
@@ -140,9 +140,6 @@ confecthub/
 
 ### Sweet deleted
 ![Sweet deleted](screenshots/Sweet_Deleted.png)
-
-### All sweets (example image)
-![Sweets](screenshots/sweets.jpg)
 
 
 ## My AI Usage
