@@ -31,28 +31,38 @@ This website allows users to view and buy sweets of all types. They can search a
 ## Installation
 
 1. **Clone the repository**
+```bash
     git clone https://github.com/your-username/confecthub.git
     cd confecthub
+```
 
 2. **Backend Setup (Django + SQLite)**
+```bash
     cd backend
     pip install -r requirements.txt
     python manage.py migrate
     python manage.py runserver  
+```
 
 3. **Frontend Setup (React + TailwindCSS)**
+```bash
     cd frontend
     npm i
     npm run dev
+```
 
 ---
 
 ## Running Tests
 1. **Backend Tests (Django):**
+```bash
     python manage.py runserver
+```
 
 2. **Frontend Tests (React):**
+```bash
     npm run dev
+```
 
 ---
 

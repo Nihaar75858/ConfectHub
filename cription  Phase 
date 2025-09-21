@@ -1,0 +1,48 @@
+99c900c | 2025-09-21 | Made some changes, with better exploring for the user and admin. Made Navbar into a seperate component with different views for different viewers (user, admin and guest). Made Create and Update Sweet better with proper structure.
+28e57a3 | 2025-09-20 | Updated Readme
+2e09d12 | 2025-09-20 | Refactored Readme
+4ad5903 | 2025-09-20 | feat: Refactored Admin Dashboard into different components to make a smooth workflow.
+65cbc0f | 2025-09-20 | feat: Added passing test case for Admin DashBoard with JSON decoding in login for admin role t o be considered >> >> >> Used an AI Assistant to implement boilerplate code for Dashboard, as well as for Json decoding. >> >> Co-authored-by: Claude <claude@users.noreply.github.com>
+1447079 | 2025-09-20 | Added failed test cases for AdminDashBoard
+a216be8 | 2025-09-20 | Refactored Restock Sweet API with input validation and message content
+0f28c93 | 2025-09-20 | Implemented passing test case for Sweet Restock API
+19bdf5c | 2025-09-20 | Added failing test cases for Sweet Restock
+5e86d87 | 2025-09-20 | Refactored: Integrated Delete Sweet API with Update Sweet Details API with does not exist condition
+91a3641 | 2025-09-20 | Implemented Passing test case for Delete Sweet API
+b6245be | 2025-09-20 | Added fail test cases for Delete Sweet API
+c186286 | 2025-09-20 | Refactored Update Sweet Details by adding validation to sweet_id
+9f5827d | 2025-09-20 | Implemented passing test case for Update Sweet Details API
+f7da214 | 2025-09-20 | Added failing test case for Update Sweet Details
+eb77ac5 | 2025-09-20 | feat: Refactored Dashboard for better UI/UX experience
+8397b91 | 2025-09-20 | feat: Implemented passing test case for User Dashboard APIs
+e320077 | 2025-09-20 | Refactored Login with better UI/Ux experience
+e99c74f | 2025-09-20 | Refactored Login frontend with input validation
+78fb841 | 2025-09-20 | feat: Implemented passing test case for Login frontend
+e0a66c8 | 2025-09-20 | Added failing test case to Login frontend
+b77e726 | 2025-09-20 | Refactored Sweet Purchase API with input validation and user validation
+512b9b2 | 2025-09-20 | Implemented passing testcase for Sweet Purchase API
+7e432fa | 2025-09-20 | Added failing testcase for Sweet Purchase API
+447393f | 2025-09-20 | feat: Refactored Sweet Search API without user credentials validation and smooth workflow
+0d7456c | 2025-09-20 | Added Sweet Search API for passing test case
+0dc8ba7 | 2025-09-20 | Added failed test cases for Sweet Search API
+01c5e52 | 2025-09-20 | Integrated both post sweets and get sweets list in one view
+98b01c5 | 2025-09-20 | feat: Refactored Sweet List API with smooth flow for searching and filtering
+17b199c | 2025-09-20 | Added passing test case for Sweet List API
+21a8f78 | 2025-09-20 | Added failed test cases for Sweet List API
+efc76c2 | 2025-09-20 | Added new test case to Dashboard with update to others
+e84cbe5 | 2025-09-20 | Added failing test cases for Dashboard API
+7595476 | 2025-09-20 | feat: Refactored Register frontend API, added input validation and css
+8a4fca2 | 2025-09-20 | feat: Implemented Register frontend for passing test
+3891804 | 2025-09-19 | Created failing test for Register frontend
+9c3bdb6 | 2025-09-19 | feat: Created Protected Route for Add Sweet API with permissions
+110c32b | 2025-09-19 | Implemented Adding Sweet API for passing test case
+6aa91de | 2025-09-19 | feat: Added failing test case to POST Sweets API
+ce51656 | 2025-09-19 | feat: Refactored Login API with input validation and error handling
+f59eeeb | 2025-09-19 | Implemented Login API to pass test
+a626f5a | 2025-09-19 | Added failing Login API test cases
+dca4150 | 2025-09-19 | feat: Refactor Regsiter api, added JWT Tokenisation with refresh and access token
+f011cab | 2025-09-18 | feat: Implemented Registration to pass test
+0bd768d | 2025-09-18 | feat: Added failing test for Registration
+40ee1a1 | 2025-09-18 | Merge branch 'main' of https://github.com/Nihaar75858/Sweet-Shop-Management-System Merged to pull Readme from alternate history
+662f9e4 | 2025-09-18 | Project Setup
+5f8ef2f | 2025-09-18 | Initial commit
