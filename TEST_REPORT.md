@@ -193,12 +193,21 @@ Tests:       3 passed, 3 total
 Snapshots:   0 total
 ```
 
+```
+PASS src/components/__tests__/PublicDashboard.test.js
+ ✓ Guests can see the dashboard along with the sweets
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+```
+
 ---
 
 ## Coverage Report
 ```
-Total Test Suites: 15 passed, 15 total
-Total Tests:       32 passed, 32 total
+Total Test Suites: 16 passed, 16 total
+Total Tests:       33 passed, 33 total
 Snapshots:         0 total
 ```
 
@@ -230,7 +239,7 @@ Snapshots:         0 total
 | `447393f` | 2025-09-20 | Refactored Sweet Search API without user credentials ... | ♻️ Refactor |
 | `7e432fa` | 2025-09-20 | Added failing testcase for Sweet Purchase API | 🔴 Red |
 | `512b9b2` | 2025-09-20 | Implemented passing testcase for Sweet Purchase API | 🟢 Green |
-| `b77e726` | 2025-09-20 | Refactored Sweet Purchase API with input validation and user validation | ♻️ Refactor |
+| `b77e726` | 2025-09-20 | Refactored Sweet Purchase API with input validation and user... | ♻️ Refactor |
 | `e0a66c8` | 2025-09-20 | Added failing test case to Login frontend | 🔴 Red |
 | `78fb841` | 2025-09-20 | Implemented passing test case for Login frontend | 🟢 Green |
 | `e99c74f` | 2025-09-20 | Refactored Login frontend with input validation | ♻️ Refactor |
@@ -252,3 +261,8 @@ Snapshots:         0 total
 | `2e09d12` | 2025-09-20 | Refactored Readme | ♻️ Refactor |
 | `28e57a3` | 2025-09-20 | Updated Readme | ♻️ Refactor |
 | `99c900c` | 2025-09-21 | Made some changes, with better exploring for the user and admin. | ♻️ Refactor |
+| `fbd6f02` | 2025-09-22 | Updated test report and added failing test cases for...| 🔴 Red |
+| `40f3762` | 2025-09-22 | Added passing test case for PubDashboard | 🟢 Green |
+| `2d8771a` | 2025-09-22 | Refactored PubDashboard with better UI and footer | ♻️ Refactor |
+| `6383deb` | 2025-09-22 | Refactored UserDashboard and AdminDashboard with better UI | ♻️ Refactor |
+| `212a8c8` | 2025-09-22 | Refactored AdminDashboard with CreateSweet and UpdateSweet... | ♻️ Refactor |

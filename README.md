@@ -100,46 +100,46 @@ confecthub/
 ![Register](screenshots/Register.png)
 
 ### User Dashboard
-![User Dashboard](screenshots/User Dashboard (elongated).png)
+![User Dashboard](screenshots/User_Dashboard_(elongated).png)
 
 ### Public Dashboard
-![Public Dashboard](screenshots/Public Dashboard.png)
+![Public Dashboard](screenshots/Public_Dashboard.png)
 
 ### Sweet before purchase
-![Sweet before purchase](screenshots/Sweet before purchase.png)
+![Sweet before purchase](screenshots/Sweet_before_purchase.png)
 
 ### Sweets are purchased
-![Sweets are purchased](screenshots/Sweets are purchased.png)
+![Sweets are purchased](screenshots/Sweets_are_purchased.png)
 
 ### Change quantity
-![Change quantity](screenshots/Change quantity.png)
+![Change quantity](screenshots/Change_quantity.png)
 
 ### Search sweets
-![Search sweets](screenshots/Search sweets.png)
+![Search sweets](screenshots/Search_Sweets.png)
 
 ### Search sweets by filter
-![Search sweets by filter](screenshots/Search sweets by filter.png)
+![Search sweets by filter](screenshots/Search_sweets_by_Filter.png)
 
 ### New Sweet is created
-![New Sweet is created](screenshots/New Sweet is created.png)
+![New Sweet is created](screenshots/New_Sweet_is_Created.png)
 
 ### Create New Sweet
-![Create New Sweet](screenshots/Create New Sweet.png)
+![Create New Sweet](screenshots/Create_New_Sweet.png)
 
 ### Add details of the new Sweet
-![Add details of the new Sweet](screenshots/Add details of the new Sweet.png)
+![Add details of the new Sweet](screenshots/Add_details_of_the_new_Sweet.png)
 
 ### Sweet Updated
-![Sweet Updated](screenshots/Sweet Updated.png)
+![Sweet Updated](screenshots/Sweet_Updated.png)
 
 ### Update sweet
-![Update sweet](screenshots/Update sweet.png)
+![Update sweet](screenshots/Update_sweet.png)
 
 ### Sweet to be deleted
-![Sweet to be deleted](screenshots/Sweet to be deleted.png)
+![Sweet to be deleted](screenshots/Sweet_to_be_deleted.png)
 
 ### Sweet deleted
-![Sweet deleted](screenshots/Sweet deleted.png)
+![Sweet deleted](screenshots/Sweet_Deleted.png)
 
 ### All sweets (example image)
 ![Sweets](screenshots/sweets.jpg)
