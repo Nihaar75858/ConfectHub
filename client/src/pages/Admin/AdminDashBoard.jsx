@@ -4,14 +4,11 @@ import UpdateSweet from "./UpdateSweet";
 
 const AdminDashboard = () => {
   const [adminData, setAdminData] = useState({ name: "", email: "" });
-  const [users, setUsers] = useState([]);
   const [sweets, setSweets] = useState([]);
   const [message, setMessage] = useState("");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedSweet, setSelectedSweet] = useState(null);
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("");
 
   const makeAuthenticatedRequest = async (url, options = {}) => {
     const token = localStorage.getItem("access_token");
@@ -59,19 +56,8 @@ const AdminDashboard = () => {
       .catch((err) => console.error(err));
 
     // Fetch initial data
-    fetchUsers();
     fetchSweets();
   }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch("/api/users");
-      const data = await response.json();
-      setUsers(data.users);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
 
   const fetchSweets = async () => {
     try {
@@ -139,10 +125,6 @@ const AdminDashboard = () => {
         <div className="mb-8">
           <h2 className="text-xl font-bold mb-4">Dashboard Overview</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-semibold">Total Users</h3>
-              <p className="text-3xl text-blue-600">{users.length}</p>
-            </div>
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-lg font-semibold">Total Sweets</h3>
               <p className="text-3xl text-green-600">{sweets.length}</p>

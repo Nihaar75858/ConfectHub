@@ -103,14 +103,13 @@ const UserDashboard = () => {
     setFilteredSweets(filtered);
   }, [search, filter, sweets]);
 
-  const handlePurchase = async (sweetId, index) => {
+  const handlePurchase = async (sweetId, index, quantity) => {
     try {
-      sweetId += 1;
       const purchaseData = await makeAuthenticatedRequest(
         `http://localhost:8000/api/sweets/${sweetId}/purchase/`,
         {
           method: "POST",
-          body: JSON.stringify({ quantity: 1 }),
+          body: JSON.stringify({ quantity }),
         }
       );
 
@@ -119,7 +118,7 @@ const UserDashboard = () => {
       setSweets((prev) =>
         prev.map((sweet) =>
           sweet.id === sweetId
-            ? { ...sweet, quantity: sweet.quantity - 1 }
+            ? { ...sweet, quantity: sweet.quantity - quantity }
             : sweet
         )
       );
@@ -127,12 +126,12 @@ const UserDashboard = () => {
       setFilteredSweets((prev) =>
         prev.map((sweet) =>
           sweet.id === sweetId
-            ? { ...sweet, quantity: sweet.quantity - 1 }
+            ? { ...sweet, quantity: sweet.quantity - quantity }
             : sweet
         )
       );
 
-      alert(`Successfully purchased ${purchaseData.sweet}!`);
+      alert(`Successfully purchased ${quantity} of ${purchaseData.sweet}!`);
     } catch (error) {
       console.error("Purchase error:", error);
       alert(`Purchase failed: ${error.message}`);
@@ -177,7 +176,7 @@ const UserDashboard = () => {
             className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
-            placeholder="Filter"
+            placeholder="Filter by category/price"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -211,11 +210,42 @@ const UserDashboard = () => {
                   <h3 className="text-lg font-bold text-gray-800">{s.name}</h3>
                   <p className="text-sm text-gray-600">{s.category}</p>
                   <p className="text-sm text-gray-700">₹{s.price}</p>
-                  <p className="text-sm text-gray-700">Qty: {s.quantity}</p>
+
+                  {/* Quantity input */}
+                  <div className="flex items-center gap-4 mt-2">
+                    <span className="text-sm text-gray-700">
+                      Qty available: {s.quantity}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm mr-2">Quantity:</label>
+                      <input
+                        type="number"
+                        min="1"
+                        max={s.quantity}
+                        value={s.selectedQuantity || 1}
+                        onChange={(e) => {
+                          const value = Math.min(
+                            Math.max(1, parseInt(e.target.value) || 1),
+                            s.quantity
+                          );
+                          setFilteredSweets((prev) =>
+                            prev.map((sweet, i) =>
+                              i === idx
+                                ? { ...sweet, selectedQuantity: value }
+                                : sweet
+                            )
+                          );
+                        }}
+                        className="w-16 border rounded px-2 py-1 text-sm"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <button
-                  onClick={() => handlePurchase(idx)}
+                  onClick={() =>
+                    handlePurchase(s.id, idx, s.selectedQuantity || 1)
+                  }
                   disabled={s.quantity === 0}
                   className={`w-full px-4 py-2 rounded-md font-semibold text-white transition ${
                     s.quantity === 0
@@ -232,6 +262,6 @@ const UserDashboard = () => {
       </section>
     </div>
   );
-}
+};
 
 export default UserDashboard;

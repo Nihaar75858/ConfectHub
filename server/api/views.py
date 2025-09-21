@@ -31,9 +31,6 @@ def login(request):
     print("Data from frontend", request.data) 
     if serializer.is_valid():
         user = serializer.validated_data['user']
-        print(f"✅ User authenticated: {user.email}")
-        print(f"✅ User role: {user.role}")
-        print(f"✅ User ID: {user.id}")
         refresh = RefreshToken.for_user(user)
         access_token = refresh.access_token
         
